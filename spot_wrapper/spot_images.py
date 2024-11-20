@@ -10,6 +10,7 @@ from bosdyn.client.image import (
     UnsupportedPixelFormatRequestedError,
 )
 from bosdyn.client.robot import Robot
+from bosdyn.client import RpcError
 
 """List of body image sources for periodic query"""
 CAMERA_IMAGE_SOURCES = [
@@ -325,7 +326,11 @@ class SpotImages:
         except UnsupportedPixelFormatRequestedError as e:
             self._logger.error(e)
             return None
-        if self._robot.has_arm():
+        try:
+            robot_has_arm = self._robot.has_arm()
+        except RpcError:
+            robot_has_arm = False
+        if robot_has_arm:
             return ImageWithHandBundle(
                 frontleft=image_responses[0],
                 frontright=image_responses[1],
