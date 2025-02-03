@@ -486,9 +486,9 @@ class SpotWrapper:
                 self._robot_state_client = self._robot.ensure_client(
                     RobotStateClient.default_service_name
                 )
-                self._world_objects_client = self._robot.ensure_client(
-                    WorldObjectClient.default_service_name
-                )
+                # self._world_objects_client = self._robot.ensure_client(
+                #     WorldObjectClient.default_service_name
+                # )
                 self._robot_command_client = self._robot.ensure_client(
                     RobotCommandClient.default_service_name
                 )
@@ -511,9 +511,9 @@ class SpotWrapper:
                 self._estop_client = self._robot.ensure_client(
                     EstopClient.default_service_name
                 )
-                self._docking_client = self._robot.ensure_client(
-                    DockingClient.default_service_name
-                )
+                # self._docking_client = self._robot.ensure_client(
+                #     DockingClient.default_service_name
+                # )
                 self._spot_check_client = self._robot.ensure_client(
                     SpotCheckClient.default_service_name
                 )
@@ -626,17 +626,17 @@ class SpotWrapper:
         else:
             self._spot_arm = None
 
-        self._spot_images = SpotImages(self._robot, self._logger, self._image_client)
+        self._spot_images = SpotImages(self._robot, self._logger, self._image_client, self._rgb_cameras)
 
-        self._spot_docking = SpotDocking(
-            self._robot,
-            self._logger,
-            self._state,
-            self._command_data,
-            self._docking_client,
-            self._robot_command_client,
-            self._claim_decorator,
-        )
+        # self._spot_docking = SpotDocking(
+        #     self._robot,
+        #     self._logger,
+        #     self._state,
+        #     self._command_data,
+        #     self._docking_client,
+        #     self._robot_command_client,
+        #     self._claim_decorator,
+        # )
 
         self._spot_graph_nav = SpotGraphNav(
             self._robot,
@@ -661,14 +661,14 @@ class SpotWrapper:
         else:
             self._spot_eap = None
 
-        self._spot_world_objects = SpotWorldObjects(
-            self._logger,
-            self._world_objects_client,
-            self._rates.get("world_objects", 10),
-            self._callbacks.get("world_objects", None),
-        )
-        self._world_objects_task = self._spot_world_objects.async_task
-        robot_tasks.append(self._world_objects_task)
+        # self._spot_world_objects = SpotWorldObjects(
+        #     self._logger,
+        #     self._world_objects_client,
+        #     self._rates.get("world_objects", 10),
+        #     self._callbacks.get("world_objects", None),
+        # )
+        # self._world_objects_task = self._spot_world_objects.async_task
+        # robot_tasks.append(self._world_objects_task)
 
         self._async_tasks = AsyncTasks(robot_tasks)
 
